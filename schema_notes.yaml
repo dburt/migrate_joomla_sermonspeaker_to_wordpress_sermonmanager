@@ -1,0 +1,132 @@
+stalfs sermons
+
+"0": migrate sermon database
+"0.a": schemas
+"0.a.i Joomla SermonSpeaker":
+	note: |
+		some data is encoded as reasonably consistent structured text rather than in well factored fields
+	database: stalfred_joomla
+	tables:
+		- lrx9q_categories WHERE extension='com_sermonspeaker': 5
+			- title
+			- alias
+		- lrx9q_sermon_scriptures: 540
+			- :note:
+				- only text field populated for earlier entries, only numbers for later entries
+				- numbers are inadequate for sermons on multiple passages so rely on sermons.notes first
+			- sermon_id
+			- ordering (?)
+			- text
+			- book
+			- cap1
+			- vers1
+			- cap2
+			- vers2
+		- lrx9q_sermon_series: 48
+			- title
+			- alias
+			- series_description
+			- state (?)
+			- avatar
+			- catid
+			- created
+			- modified
+		- lrx9q_sermon_sermons: 639
+			- speaker_id
+			- series_id
+			- audiofile
+			- title
+			- alias
+			- sermon_number (subordinate to series_id)
+			- sermon_date
+			- notes
+			- ordering (?)
+			- created
+			- modified
+			- podcast (flag)
+			- addfile
+			- addfileDesc
+			- catid
+		- lrx9q_sermon_speakers: 104
+			- title
+			- alias
+			- website
+			- intro
+			- bio
+			- pic
+			- state (?)
+			- ordering (?)
+			- catid
+
+"0.a.ii wpplay Sermon Manager":
+	note: |
+		all tables are shared with rest of wordpress system
+		prefixes include 'wpfc' for 'wordpress for church'
+	database: stalfred_wpplay
+	tables:
+		- wply_postmeta
+			- post_id
+			- meta_key:
+				attachment:
+					- _wp_attached_file
+					- _wp_attachment_metadata (hash like {dataformat: 'mp3', ...})
+				wpfc_sermon:
+					- bible_passage
+					- sermon_date
+					- sermon_description
+					- sermon_audio
+					- sermon_notes
+					- wpfc_sevice_type_select (array like [10])
+					- _wpfc_sermon_duration
+					- enclosure
+			- meta_value
+		- wply_posts WHERE post_type IN ('wpfc_sermon', 'attachment')
+			- author
+			- date
+			- content (null for wpfc_sermon; see postmeta.sermon_description instead)
+			- title
+			- name (slug of title)
+			- modified
+			- parent (for attachment, points to wpfc_sermon)
+			- guid (a url)
+			- post_type ('wpfc_sermon' or 'attachment')
+			- post_mime_type (for attachment)
+		- wply_term_relationships
+			- object_id (= posts.id)
+			- term_taxonomy_id
+		- wply_terms
+			- name
+			- slug
+		- wply_term_taxonomy WHERE taxonomy LIKE 'wpfc_%'
+			- term_id
+			- taxonomy (bible_book, preacher, sermon_series, service_type, sermon_topics)
+			- description (not yet used)
+			- parent (not yet used)
+
+"0.b sample data":
+	Joomla:
+		notes:
+			-	scripture ref could be in notes, scriptures.text, or scriptures.book etc.
+		sermons:
+			-	id: 10650
+				speaker_id: 10044
+				series_id: 10048
+				catid: 102
+				notes: '<p>| 1 Pet 3:13-22 | Mike McNamara |</p><p>Our Bible passage today from 1 Peter 3 continues...'
+			-	id: 
+		scriptures:
+			-	sermon_id: 10648
+				ordering: 1
+				text: ''
+				book: 60
+				cap1: 3
+				vers1: 13
+				cap2: 0
+				vers2: 22
+				...
+			-	sermon_id: 10031
+				ordering: 0
+				text: Isa 60:1-6, Mt 2:1-12
+				book: 0
+				cap1: 0
+				...
