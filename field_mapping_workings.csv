@@ -1,0 +1,76 @@
+database,table_prefix,table_name,field,post_type,meta_key,description,source
+stalfred_joomla,lrx9q_,categories,title,,,category name,
+stalfred_joomla,lrx9q_,categories,alias,,,category slug,
+stalfred_joomla,lrx9q_,sermon_scriptures,sermon_id,,,,
+stalfred_joomla,lrx9q_,sermon_scriptures,ordering (?),,,,
+stalfred_joomla,lrx9q_,sermon_scriptures,text,,,,
+stalfred_joomla,lrx9q_,sermon_scriptures,book,,,,
+stalfred_joomla,lrx9q_,sermon_scriptures,cap1,,,,
+stalfred_joomla,lrx9q_,sermon_scriptures,vers1,,,,
+stalfred_joomla,lrx9q_,sermon_scriptures,cap2,,,,
+stalfred_joomla,lrx9q_,sermon_scriptures,vers2,,,,
+stalfred_joomla,lrx9q_,sermon_series,title,,,series name,
+stalfred_joomla,lrx9q_,sermon_series,alias,,,series slug,
+stalfred_joomla,lrx9q_,sermon_series,series_description,,,,
+stalfred_joomla,lrx9q_,sermon_series,state (?),,,,
+stalfred_joomla,lrx9q_,sermon_series,avatar,,,series image,
+stalfred_joomla,lrx9q_,sermon_series,catid,,,(join key),
+stalfred_joomla,lrx9q_,sermon_series,created,,,,
+stalfred_joomla,lrx9q_,sermon_series,modified,,,,
+stalfred_joomla,lrx9q_,sermon_sermons,speaker_id,,,(join key),
+stalfred_joomla,lrx9q_,sermon_sermons,series_id,,,(join key),
+stalfred_joomla,lrx9q_,sermon_sermons,audiofile,,,audio url,
+stalfred_joomla,lrx9q_,sermon_sermons,title,,,sermon name,
+stalfred_joomla,lrx9q_,sermon_sermons,alias,,,sermon slug,
+stalfred_joomla,lrx9q_,sermon_sermons,sermon_number (subordinate to series_id),,,,
+stalfred_joomla,lrx9q_,sermon_sermons,sermon_date,,,sermon date,
+stalfred_joomla,lrx9q_,sermon_sermons,notes,,,?,
+stalfred_joomla,lrx9q_,sermon_sermons,ordering (?),,,,
+stalfred_joomla,lrx9q_,sermon_sermons,created,,,,
+stalfred_joomla,lrx9q_,sermon_sermons,modified,,,,
+stalfred_joomla,lrx9q_,sermon_sermons,podcast (flag),,,podcast flag,
+stalfred_joomla,lrx9q_,sermon_sermons,addfile,,,,
+stalfred_joomla,lrx9q_,sermon_sermons,addfileDesc,,,,
+stalfred_joomla,lrx9q_,sermon_sermons,catid,,,,
+stalfred_joomla,lrx9q_,sermon_speakers,title,,,speaker name,
+stalfred_joomla,lrx9q_,sermon_speakers,alias,,,speaker slug,
+stalfred_joomla,lrx9q_,sermon_speakers,website,,,,
+stalfred_joomla,lrx9q_,sermon_speakers,intro,,,,
+stalfred_joomla,lrx9q_,sermon_speakers,bio,,,speaker bio,
+stalfred_joomla,lrx9q_,sermon_speakers,pic,,,speaker image,
+stalfred_joomla,lrx9q_,sermon_speakers,state (?),,,,
+stalfred_joomla,lrx9q_,sermon_speakers,ordering (?),,,,
+stalfred_joomla,lrx9q_,sermon_speakers,catid,,,(join key),
+,,,,,,,
+,,,,,,,
+stalfred_wpplay,wply_,postmeta,post_id,,,(join key),
+stalfred_wpplay,wply_,postmeta,meta_key,,,,
+stalfred_wpplay,wply_,postmeta,meta_value,attachment,_wp_attached_file,audio url,
+stalfred_wpplay,wply_,postmeta,meta_value,attachment,"_wp_attachment_metadata (hash like {dataformat: 'mp3', ...})",,
+stalfred_wpplay,wply_,postmeta,meta_value,wpfc_sermon,bible_passage,,extract from sermons.notes
+stalfred_wpplay,wply_,postmeta,meta_value,wpfc_sermon,sermon_date,,UNIX_TIMESTAMP(sermons.sermon_date)
+stalfred_wpplay,wply_,postmeta,meta_value,wpfc_sermon,sermon_description,,sermons.notes
+stalfred_wpplay,wply_,postmeta,meta_value,wpfc_sermon,sermon_audio,,sermons.audiofile
+stalfred_wpplay,wply_,postmeta,meta_value,wpfc_sermon,sermon_notes,,?
+stalfred_wpplay,wply_,postmeta,meta_value,wpfc_sermon,wpfc_sevice_type_select (array like [10]),,sermons.podcast (or list of catid)
+stalfred_wpplay,wply_,postmeta,meta_value,wpfc_sermon,_wpfc_sermon_duration,,extract from audio file metadata
+stalfred_wpplay,wply_,postmeta,meta_value,wpfc_sermon,enclosure,,"sermons.audiofile + ""\n"" + size + ""\n"" + content-type"
+stalfred_wpplay,wply_,postmeta,meta_value,wpfc_sermon,_thumbnail_id,,post_id of an 'attachment' type post whose post_parent = this post_id
+stalfred_wpplay,wply_,posts,author,,,,speakers.title
+stalfred_wpplay,wply_,posts,date,,,,sermons.created
+stalfred_wpplay,wply_,posts,content (null for wpfc_sermon; see postmeta.sermon_description instead),,,,NULL
+stalfred_wpplay,wply_,posts,title,,,,sermons.title
+stalfred_wpplay,wply_,posts,name (slug of title),,,,sermons.alias
+stalfred_wpplay,wply_,posts,modified,,,,sermons.modified
+stalfred_wpplay,wply_,posts,"parent (for attachment, points to wpfc_sermon)",,,,NULL
+stalfred_wpplay,wply_,posts,guid (a url),,,,?
+stalfred_wpplay,wply_,posts,post_type ('wpfc_sermon' or 'attachment'),,,,'wpfc_sermon'
+stalfred_wpplay,wply_,posts,post_mime_type (for attachment),,,,NULL
+stalfred_wpplay,wply_,term_relationships,object_id (= posts.id),,,(join key),
+stalfred_wpplay,wply_,term_relationships,term_taxonomy_id,,,(join key),
+stalfred_wpplay,wply_,terms,name,,,"category, series, service names","categories.title, series.title, speakers.title"
+stalfred_wpplay,wply_,terms,slug,,,"category, series, service slugs","categories.alias, series.alias, speakers.alias"
+stalfred_wpplay,wply_,term_taxonomy,term_id,,,(join key),
+stalfred_wpplay,wply_,term_taxonomy,"taxonomy (bible_book, preacher, sermon_series, service_type, sermon_topics)",,,,
+stalfred_wpplay,wply_,term_taxonomy,description (not yet used),,,,
+stalfred_wpplay,wply_,term_taxonomy,parent (not yet used),,,,
