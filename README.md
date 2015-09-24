@@ -1,1 +1,3 @@
-# migrate_joomla_sermonspeaker_to_wordpress_sermonmanager
+# Migrate Joomla SermonSpeaker to WordPress Sermon Manager
+
+Scripts to migrate sermon data from  Joomla SermonSpeaker to WordPress Sermon Manager for [stalfreds.org](http://stalfreds.org/).
